@@ -4,7 +4,7 @@ from pymongo import MongoClient
 import pandas as pd
 
 mongoURI = "[Enter URI Here]"
-mongoURI = "mongodb+srv://dbAdmin:cmpt732@cluster732.jfbfw.mongodb.net"
+
 
 app = FastAPI()
 client = MongoClient(mongoURI)
