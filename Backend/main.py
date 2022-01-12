@@ -1,31 +1,22 @@
-from typing import Optional
 from fastapi import FastAPI
-from pymongo import MongoClient
-import pandas as pd
+from database import retrieve_incomes
+from routes.income import router as IncomeRouter
+from models.incomeRecords import (
+    ErrorResponseModel,
+    ResponseModel,
+    IncomeSchema,
+    UpdateIncomeModel,
+)
 
-mongoURI = "[Enter URI Here]"
 
 
 app = FastAPI()
-client = MongoClient(mongoURI)
-db = client.KaggleProject
-records = list(db["Income"].find())
-print(type(records))
-records = pd.DataFrame(records)
+app.include_router(IncomeRouter, tags=["Income"], prefix="/income")
 
-
-
-
-
-@app.get("/")
+@app.get("/", tags=["Root"])
 async def read_root():
-    return {"Hello": "World"}
+    return {"message": "Welcome to this fantastic app!"}
 
-@app.get("/mongo")
-async def read_root():
-    # return records
-    return {"Hello": "World"}
-    
 
 # @app.get("/items/{item_id}")
 # async def read_item(item_id: int, q: Optional[str] = None):
